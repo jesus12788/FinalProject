@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: pet_shelter
+    password: pet_shelter
+    url: jdbc:mysql://localhost:3306/pet_shelter  
+    
+  jpa:
+    hibernate:
+      ddl-auto: none   
+    show_sql: true
+       
+  sql:
+    init:
+      mode: always      
