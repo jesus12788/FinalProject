@@ -28,5 +28,7 @@ public class Dog {
 	@ManyToOne
 	@JoinColumn(name = "foster_id", nullable = false)
 	private Foster foster;
+	
+	
 
 }
