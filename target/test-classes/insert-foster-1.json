@@ -1,0 +1,14 @@
+{
+ "firstName": "John",
+ "lastName": "Wayne",
+ "fosterAddress": "345 W Yuma",
+ "fosterPhone": "(602)846-1128",
+ "email": "@Westworld.com"
+}
+
+{
+ "age": "3",
+ "name": "jack",
+ "color": "brown",
+ "breed": "golden retriever"
+}

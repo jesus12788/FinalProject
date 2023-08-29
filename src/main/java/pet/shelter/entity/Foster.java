@@ -43,7 +43,7 @@ public class Foster {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "location_foster", joinColumns = @JoinColumn(name = "foster_id"),
+	@JoinTable(name = "foster_location", joinColumns = @JoinColumn(name = "foster_id"),
 	inverseJoinColumns = @JoinColumn(name = "location_id"))
 	private Set <Location> location = new HashSet<>();
 	

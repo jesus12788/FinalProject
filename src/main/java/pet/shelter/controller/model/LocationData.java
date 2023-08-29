@@ -68,7 +68,7 @@ public class LocationData {
 
 	@Data
 	@NoArgsConstructor
-	public class FosterData {
+	static public class FosterData {
 		private Long fosterId;
 		private String firstName;
 		private String lastName;
@@ -110,7 +110,7 @@ public class LocationData {
 
 	@Data
 	@NoArgsConstructor
-	public class DogData {
+	static public class DogData {
 		private Long dogId;
 		private String age;
 		private String name;

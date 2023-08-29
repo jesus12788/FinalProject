@@ -3,6 +3,7 @@ package pet.shelter.service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +11,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pet.shelter.controller.model.LocationData;
 import pet.shelter.controller.model.LocationData.DogData;
+import pet.shelter.controller.model.LocationData.FosterData;
+import pet.shelter.dao.DogDao;
+import pet.shelter.dao.FosterDao;
 import pet.shelter.dao.LocationDao;
+import pet.shelter.entity.Dog;
+import pet.shelter.entity.Foster;
 import pet.shelter.entity.Location;
+
+
 
 @Service
 public class ShelterService {
 
 	@Autowired
 	private LocationDao locationDao;
+	
+	@Autowired
+	private FosterDao fosterDao;
+	
+	@Autowired
+	private DogDao dogDao;
+	
+	
 
 	@Transactional(readOnly = false)
 	public LocationData savelocation(LocationData locationData) {
@@ -60,6 +76,49 @@ public class ShelterService {
 		Location location = findLocationById(locationId);
 		locationDao.delete(location);
 	}
+	/*
+	 * Start of foster.
+	 */
+	@Transactional(readOnly = false)
+	public FosterData savefoster(FosterData fosterData) {
+		Foster foster = fosterData.toFoster();
+		Foster dbfoster = fosterDao.save(foster);
+		
+		return new FosterData(dbfoster);
+	}
+	/*
+	 * Start of dog.
+	 */
+//	@Transactional(readOnly = false)
+//	public DogData savedog(Long fosterId, DogData dogData) {
+//		Dog dog = dogData.toDog();
+//		Dog dbdog = dogDao.save(dog);
+//		
+//		return new DogData(dbdog);
+//	}
+	@Transactional(readOnly = false)
+	public DogData savedog(Long fosterId, DogData dogData) {
+//		Dog dog = findOrCreateDog(fosterId, fosterId);
+		Dog dog = dogData.toDog();
+		Dog dbDog = dogDao.save(dog);
+		return new DogData(dbDog);
+		
+		
+	}
+//	private Dog findOrCreateDog(Long fosterId, Long dogId) {
+//		if(Objects.isNull(fosterId)) {
+//			return new Dog();
+//		}
+//		else {
+//			return findDogById(fosterId, dogId);
+//		}
+//	}
+//	private Dog findDogById(Long fosterId, Long dogId) {
+//		
+//		return null;
+//	}
+//	
+	
 	
 
 }
