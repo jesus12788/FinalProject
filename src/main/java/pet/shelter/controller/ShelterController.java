@@ -1,7 +1,9 @@
 package pet.shelter.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+
 import pet.shelter.controller.model.LocationData;
 import pet.shelter.controller.model.LocationData.DogData;
 import pet.shelter.controller.model.LocationData.FosterData;
@@ -28,6 +32,10 @@ import pet.shelter.service.ShelterService;
 public class ShelterController {
 	@Autowired
 	private ShelterService shelterService;
+	
+	/*
+	 * location - Post, Get, Put and Delete.
+	 */
 	
 	@PostMapping("/location")
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -64,8 +72,12 @@ public class ShelterController {
 	 */
 	@PostMapping("/foster")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public FosterData createFoster(@RequestBody FosterData fosterData) {
+	public FosterData createFoster(@RequestParam(name = "locationId")Long locationId, @RequestBody FosterData fosterData) {
 		log.info("Creating foster {}", fosterData);
+		LocationData locationData = shelterService.findlocation(locationId);
+		Set<LocationData> locations = new HashSet<>();
+		locations.add(locationData);
+		fosterData.setLocation(locations);
 		return shelterService.savefoster(fosterData);
 		
 		
@@ -74,18 +86,21 @@ public class ShelterController {
 	/*
 	 * Dog
 	 */
-//	@PostMapping("/dog")
-//	@ResponseStatus(code = HttpStatus.CREATED)
-//	public DogData createDog(@RequestBody DogData dogData) {
-//		log.info("Creating dog {}", dogData);
-//		return shelterService.savedog(dogData);
-//	}
+	
+	
 	@PostMapping("/{fosterId}/dog")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public DogData insertDog(@PathVariable Long fosterId,
 			@RequestBody DogData dogData) {
+		
 		log.info("Creating dog {} for foster with ID={}", dogData,
 				fosterId);
+		
 		return shelterService.savedog(fosterId, dogData);
-	}	
+	}
+	/*
+	 * foster_location
+	 */
+	
+	
 }

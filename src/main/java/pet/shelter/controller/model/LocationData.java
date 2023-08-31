@@ -76,6 +76,7 @@ public class LocationData {
 		private String fosterPhone;
 		private String email;
 		private Set<DogData> dogs = new HashSet<>();
+		private Set<LocationData> location = new HashSet<>();
 
 		public FosterData(Foster foster) {
 			this.fosterId = foster.getFosterId();
@@ -87,6 +88,9 @@ public class LocationData {
 
 			for (Dog dog : foster.getDogs()) {
 				this.dogs.add(new DogData(dog));
+			}
+			for (Location location : foster.getLocation()) {
+				this.location.add(new LocationData(location));
 			}
 		}
 
@@ -102,6 +106,9 @@ public class LocationData {
 
 			for (DogData dogData : dogs) {
 				foster.getDogs().add(dogData.toDog());
+			}
+			for (LocationData locationData : location) {
+				foster.getLocation().add(locationData.toLocation());
 			}
 
 			return foster;

@@ -18,6 +18,7 @@ import pet.shelter.dao.LocationDao;
 import pet.shelter.entity.Dog;
 import pet.shelter.entity.Foster;
 import pet.shelter.entity.Location;
+;
 
 
 
@@ -40,6 +41,13 @@ public class ShelterService {
 		Location location = locationData.toLocation();
 		Location dbLocation = locationDao.save(location);
 
+		return new LocationData(dbLocation);
+
+	}
+	@Transactional(readOnly = false)
+	public LocationData findlocation(Long locationId) {
+		
+		Location dbLocation = findLocationById(locationId);
 		return new LocationData(dbLocation);
 
 	}
@@ -98,26 +106,55 @@ public class ShelterService {
 //	}
 	@Transactional(readOnly = false)
 	public DogData savedog(Long fosterId, DogData dogData) {
-//		Dog dog = findOrCreateDog(fosterId, fosterId);
-		Dog dog = dogData.toDog();
+		Long dogId = dogData.getDogId();
+		Foster foster = findFosterById(fosterId);
+		Dog dog = findOrCreateDog(fosterId, dogId);
+		copyDogFields(dog, dogData);
+		
+		dog.setFoster(foster);
+		foster.getDogs().add(dog);
+		
 		Dog dbDog = dogDao.save(dog);
 		return new DogData(dbDog);
 		
 		
 	}
-//	private Dog findOrCreateDog(Long fosterId, Long dogId) {
-//		if(Objects.isNull(fosterId)) {
-//			return new Dog();
-//		}
-//		else {
-//			return findDogById(fosterId, dogId);
-//		}
-//	}
-//	private Dog findDogById(Long fosterId, Long dogId) {
-//		
-//		return null;
-//	}
-//	
+	
+	private void copyDogFields(Dog dog, DogData dogData) {
+		dog.setDogId(dogData.getDogId());
+		dog.setAge(dogData.getAge());
+		dog.setName(dogData.getName());
+		dog.setColor(dogData.getColor());
+		dog.setBreed(dogData.getBreed());
+	}
+	private Dog findOrCreateDog(Long fosterId, Long dogId) {
+		if(Objects.isNull(dogId)) {
+			return new Dog();
+		}
+		else {
+			return findDogById(fosterId, dogId);
+		}
+	}
+	private Dog findDogById(Long fosterId, Long dogId) {
+		findFosterById(fosterId);
+		Dog dog = dogDao.findById(dogId)
+		  .orElseThrow(() ->  new NoSuchElementException());
+		
+		if (dog.getFoster().getFosterId() != fosterId) {
+			throw new IllegalArgumentException("This dog does not belong to this foster");
+		}
+		return dog;
+		
+	}
+	
+	private Foster findFosterById(Long fosterId) {
+		return fosterDao.findById(fosterId)
+				.orElseThrow(() -> new NoSuchElementException(
+						"PetStore with ID=" + fosterId + " was not found."));
+	
+		
+	}
+	
 	
 	
 
