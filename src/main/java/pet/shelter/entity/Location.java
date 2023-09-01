@@ -19,11 +19,23 @@ public class Location {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long locationId;
 	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String businessName;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String streetAddress;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String city;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String state;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String zip;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String phone;
 	
 	

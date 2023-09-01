@@ -24,14 +24,19 @@ public class Foster {
 	private Long fosterId;
 	
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String firstName;
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String lastName;
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String fosterAddress;
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String fosterPhone;
 	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String email;
 	
 	@EqualsAndHashCode.Exclude
@@ -39,10 +44,11 @@ public class Foster {
 	@OneToMany(mappedBy = "foster", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set <Dog> dogs = new HashSet<>();
 	
-	
+	//On line 45 PERSIST was changed to MERGE. It tells hibernate to merge the class and and insert the record.
+	//org.hibernate.persistentobjectexception: detached entity passed to persist
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "foster_location", joinColumns = @JoinColumn(name = "foster_id"),
 	inverseJoinColumns = @JoinColumn(name = "location_id"))
 	private Set <Location> location = new HashSet<>();

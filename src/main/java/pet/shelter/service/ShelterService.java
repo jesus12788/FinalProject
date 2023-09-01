@@ -4,10 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
 
 import pet.shelter.controller.model.LocationData;
 import pet.shelter.controller.model.LocationData.DogData;
@@ -93,7 +96,15 @@ public class ShelterService {
 		Foster dbfoster = fosterDao.save(foster);
 		
 		return new FosterData(dbfoster);
+		
+		
 	}
+	@Transactional(readOnly = true)
+	public FosterData retrieveFosterById(Long fosterId) {
+		Foster foster = findFosterById(fosterId);
+		return new FosterData(foster);
+	}
+	
 	/*
 	 * Start of dog.
 	 */
@@ -154,8 +165,44 @@ public class ShelterService {
 	
 		
 	}
+	@Transactional(readOnly = true)
+	public List<FosterData> retrieveAllFosters() {
+		List<Foster> fosters = fosterDao.findAll();
+		List<FosterData> response = new LinkedList<>();
+	    
+		for(Foster foster : fosters) {
+		response.add(new FosterData(foster));
+				
+	     }
+	     return response;
 	
-	
+	//contributor = location petpark = foster
+	}
+//	@Transactional(readOnly = false)
+//	public FosterData saveFoster(Long locationId, FosterData fosterData) {
+//		
+//			
+//			Location location = findlocationById(locationId);
+//			
+//			Set<Foster> fosters = fosterDao.findAllByIn(fosterData.getFosters());
+//			
+//			
+//			PetPark petPark = findOrCreatePetPark(petParkData.getPetParkId());
+//			setPetParkFields(petPark, petParkData);
+//			
+//			petPark.setContributor(contributor);
+//			contributor.getPetParks().add(petPark);
+//			
+//			for(Amenity amenity : amenities) {
+//				amenity.getPetParks().add(petPark);
+//				petPark.getAmenities().add(amenity);
+//			}
+//			
+//			PetPark dbPetPark = petParkDao.save(petPark);
+//			return new PetParkData(dbPetPark);
+//			
+//			
+//		}
 	
 
 }

@@ -17,9 +17,17 @@ public class Dog {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dogId;
 	
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String age;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String name;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String color;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String breed;
 	
 	

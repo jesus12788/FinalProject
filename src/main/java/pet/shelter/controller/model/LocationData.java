@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pet.shelter.entity.Dog;
 import pet.shelter.entity.Foster;
 import pet.shelter.entity.Location;
@@ -13,15 +15,30 @@ import pet.shelter.entity.Location;
 @NoArgsConstructor
 public class LocationData {
 	private Long locationId;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String businessName;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String streetAddress;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String city;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String state;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String zip;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private String phone;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Set<FosterData> fosters = new HashSet<>();
 
 	public LocationData(Location location) {
+		
 		this.locationId = location.getLocationId();
 		this.businessName = location.getBusinessName();
 		this.streetAddress = location.getStreetAddress();
@@ -50,14 +67,22 @@ public class LocationData {
 
 	// Also for Test
 	public Location toLocation() {
+		
 		Location location = new Location();
-
+		
+		
 		location.setLocationId(locationId);
+	
 		location.setBusinessName(businessName);
+		
 		location.setStreetAddress(streetAddress);
+		
 		location.setCity(city);
+		
 		location.setState(state);
+		
 		location.setZip(zip);
+		
 		location.setPhone(phone);
 
 		for (FosterData fosterData : fosters) {
@@ -70,12 +95,26 @@ public class LocationData {
 	@NoArgsConstructor
 	static public class FosterData {
 		private Long fosterId;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private String firstName;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private String lastName;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private String fosterAddress;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private String fosterPhone;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private String email;
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private Set<DogData> dogs = new HashSet<>();
+		@EqualsAndHashCode.Exclude
+		@ToString.Exclude
 		private Set<LocationData> location = new HashSet<>();
 
 		public FosterData(Foster foster) {
@@ -97,6 +136,7 @@ public class LocationData {
 		public Foster toFoster() {
 			Foster foster = new Foster();
 
+			
 			foster.setFosterId(fosterId);
 			foster.setFirstName(firstName);
 			foster.setLastName(lastName);

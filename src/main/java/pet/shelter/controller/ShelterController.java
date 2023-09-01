@@ -68,7 +68,7 @@ public class ShelterController {
 				+ " was deleted successfully.");
 	}
 	/*
-	 * foster
+	 * foster_location
 	 */
 	@PostMapping("/foster")
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -84,6 +84,16 @@ public class ShelterController {
 	
 	}
 	/*
+	 * foster
+	 */
+	
+	@GetMapping("/foster/{fosterId}")
+	public FosterData retrieveFoster(@PathVariable Long fosterId) {
+		log.info("Retrieving foster with ID={}", fosterId);
+		return shelterService.retrieveFosterById(fosterId);
+	}
+	
+	/*
 	 * Dog
 	 */
 	
@@ -98,9 +108,23 @@ public class ShelterController {
 		
 		return shelterService.savedog(fosterId, dogData);
 	}
-	/*
-	 * foster_location
-	 */
 	
+	@GetMapping("/foster")
+	public List<FosterData> retrieveAllFosters() {
+		log.info("Retrieve all fosters called.");
+		return shelterService.retrieveAllFosters();
+	}
+	
+
+//	@PostMapping("/location/{locationId}/foster")
+//	@ResponseStatus(code = HttpStatus.CREATED)
+//	public FosterData insertFoster(@PathVariable Long locationId,
+//			@RequestBody FosterData fosterData) {
+//		
+//		log.info("Creating foster {} for location with ID={}", fosterData,
+//				locationId);
+//		
+//		return shelterService.saveFoster(locationId, fosterData);
+//	}
 	
 }
