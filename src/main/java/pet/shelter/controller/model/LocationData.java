@@ -6,7 +6,7 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 import pet.shelter.entity.Dog;
 import pet.shelter.entity.Foster;
 import pet.shelter.entity.Location;
@@ -15,26 +15,19 @@ import pet.shelter.entity.Location;
 @NoArgsConstructor
 public class LocationData {
 	private Long locationId;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
 	private String businessName;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
 	private String streetAddress;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
 	private String city;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
 	private String state;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
 	private String zip;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private String phone;
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
+	
+    private String phone;
+	
 	private Set<FosterData> fosters = new HashSet<>();
 
 	public LocationData(Location location) {
@@ -95,26 +88,19 @@ public class LocationData {
 	@NoArgsConstructor
 	static public class FosterData {
 		private Long fosterId;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private String firstName;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private String lastName;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private String fosterAddress;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private String fosterPhone;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private String email;
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private Set<DogData> dogs = new HashSet<>();
-		@EqualsAndHashCode.Exclude
-		@ToString.Exclude
+		
 		private Set<LocationData> location = new HashSet<>();
 
 		public FosterData(Foster foster) {
@@ -128,9 +114,9 @@ public class LocationData {
 			for (Dog dog : foster.getDogs()) {
 				this.dogs.add(new DogData(dog));
 			}
-			for (Location location : foster.getLocation()) {
-				this.location.add(new LocationData(location));
-			}
+//			for (Location location : foster.getLocation()) {
+//				this.location.add(new LocationData(location));
+//			}
 		}
 
 		public Foster toFoster() {

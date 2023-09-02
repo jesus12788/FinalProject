@@ -22,7 +22,6 @@ public class Foster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fosterId;
-	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private String firstName;
@@ -49,8 +48,8 @@ public class Foster {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(name = "foster_location", joinColumns = @JoinColumn(name = "foster_id"),
-	inverseJoinColumns = @JoinColumn(name = "location_id"))
+	@JoinTable(name = "foster_location", joinColumns = @JoinColumn(name = "location_id"),
+	inverseJoinColumns = @JoinColumn(name = "foster_id"))
 	private Set <Location> location = new HashSet<>();
 	
 
